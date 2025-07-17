@@ -24,6 +24,11 @@ app.use(session({
 app.use('/', authroutes);
 app.use('/crud', crudroutes);
 
+app.get('/', (req, res) => {
+  res.render('auth/login'); // renders views/auth/login.ejs
+});
+
+
 app.listen(4000, () => {
   console.log('running');
 
