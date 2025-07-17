@@ -10,7 +10,7 @@ exports.register = async (req, resp) => {
 }
 
 exports.login = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
   const user = await registerModel.findOne({ email });
   if (user && await bcrypt.compare(password, user.password)) {
     req.session.user = user;
