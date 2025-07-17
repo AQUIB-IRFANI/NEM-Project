@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      /* Apply Inter font globally */
+      body {
+        font-family: "Inter", sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensures the footer sticks to the bottom of the viewport */
+        background-color: #f8f8f8; /* Light background for the page */
+      }
+      /* Main content area to push the footer down */
+      main {
+        flex: 1;
+        padding: 2rem;
+      }
+      /* Custom styling for the footer to enhance its appearance */
+      footer {
+        border-top-left-radius: 1.5rem; /* Rounded top-left corner */
+        border-top-right-radius: 1.5rem; /* Rounded top-right corner */
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow at the top */
+      }
+      /* Ensure links within the footer have good hover effects */
+      .footer-link:hover {
+        color: #d1d5db !important; /* Lighter gray on hover for links */
+        text-decoration: underline;
+      }
+      /* Style for the icon within the contact info */
+      .icon-text {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem; /* Space between icon and text */
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/crud">Navbar</a>
+          <button
+            class="navbar-toggler d-lg-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapsibleNavId"
+            aria-controls="collapsibleNavId"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" href="/crud" aria-current="page"
+                  >Home <span class="visually-hidden">(current)</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/crud/create">Add Users</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container my-5">
+        <div class="row justify-content-center">
+          <div class="col-12 col-lg-10">
+            <div class="card shadow-lg border-0">
+              <div class="card-header bg-secondary text-white text-center">
+                <h4 class="mb-0">User Profiles</h4>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive text-center">
+                  <table
+                    class="table table-striped table-hover table-bordered align-middle"
+                  >
+                    <thead class="table-dark text-center">
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% show.forEach(crud1 => { %>
+                      <tr>
+                        <td><%= crud1.name %></td>
+                        <td><%= crud1.email %></td>
+                        <td><%= crud1.age %></td>
+                        <td><%= crud1.phone %></td>
+                        <td class="text-center">
+                          <a
+                            href="/crud/<%= crud1._id %>/edit"
+                            class="btn btn-sm btn-outline-warning me-1"
+                            title="Edit User"
+                          >
+                            <i class="bi bi-pencil-square"></i> Update
+                          </a>
+                          <form
+                            action="/crud/<%= crud1._id %>/delete"
+                            method="post"
+                            class="d-inline"
+                          >
+                            <button
+                              type="submit"
+                              class="btn btn-sm btn-outline-danger"
+                              onclick="return confirmDelete(event, this)"
+                              title="Delete User"
+                            >
+                              <i class="bi bi-trash"></i> Delete
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-dark text-white mt-5 pt-5 pb-3 rounded-top shadow-lg">
+      <div class="container">
+        <div class="row gy-4 text-start">
+          <!-- About Section -->
+          <div class="col-md-4 mb-4">
+            <h5 class="fw-bold mb-3">My CRUD App</h5>
+            <p class="text-light small">
+              A simple user management system built with Node.js, Express,
+              MongoDB, and EJS. Designed for efficient data handling and a
+              smooth user experience.
+            </p>
+          </div>
+
+          <!-- Quick Links Section -->
+          <div class="col-md-4 mb-4">
+            <h6 class="fw-bold mb-3">Quick Links</h6>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a
+                  href="/crud"
+                  class="text-white text-decoration-none footer-link active"
+                  >Home</a
+                >
+              </li>
+              <li class="mb-2">
+                <a
+                  href="/crud/create"
+                  class="text-white text-decoration-none footer-link"
+                  >Add User</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="col-12 col-md-4 mb-4">
+            <h6 class="fw-bold mb-3">Contact</h6>
+            <p class="text-light small mb-2 d-flex align-items-center">
+              <i class="bi bi-envelope-fill me-2"></i> support@example.com
+            </p>
+            <p class="text-light small d-flex align-items-center">
+              <i class="bi bi-telephone-fill me-2"></i> +91 9876543210
+            </p>
+          </div>
+        </div>
+
+        <hr class="border-secondary" />
+
+        <!-- Copyright -->
+        <div class="text-center text small">
+          &copy; <%= new Date().getFullYear() %>. All Rights Reserved by
+          Company.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      function confirmDelete(event, button) {
+        event.preventDefault(); // Stop the default form submission
+
+        Swal.fire({
+          title: "Are you sure you want to delete this profile?",
+          text: "This action cannot be undone!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#6c757d",
+          confirmButtonText: "Yes, delete it!",
+          reverseButtons: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Submit the form
+            button.closest("form").submit();
+          }
+        });
+
+        return false;
+      }
+    </script>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
